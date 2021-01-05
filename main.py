@@ -160,7 +160,7 @@ def train():
     class_code_dim = 5
     data = datasets.MNIST(2000)
     # weights = [0.2, 0.1, 0.05, 0.01, 0.005, 0.001]
-    losses = []
+    # losses = []
     # for i in range(len(weights)):
     class_embed, content_embed = prepare_data_embedding(data, class_code_dim, content_code_dim, 2000)
     generator = models.GeneratorForMnistGLO(class_code_dim + content_code_dim)
@@ -168,7 +168,7 @@ def train():
     criterionL2 = nn.MSELoss()
     generator.train()
     train_loader = DataLoader(data, batch_size=batch_size, shuffle=False, num_workers=0)
-    loss = train_loop(generator, criterionL1, criterionL2, 50, train_loader, content_embed,
+    train_loop(generator, criterionL1, criterionL2, 50, train_loader, content_embed,
                       class_embed, batch_size, writer)
     generator.save("./data/reg_trained_model.ckpt")
     torch.save(content_embed, './data/reg_content_code.pt')
